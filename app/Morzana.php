@@ -9,7 +9,7 @@
 namespace App;
 
 use Illuminate\Support\Facades\DB;
-
+use DateTime;
 class Morzana
 {
     private $sender;
@@ -39,21 +39,24 @@ class Morzana
         return DB::table('Message')->insert([
             'u_idx_sender' => $this->sender,
             'm_contents' => $this->contents,
-            'u_idx_receiver' => $this->receiver
+            'u_idx_receiver' => $this->receiver,
+            'm_sendTime' => new DateTime()
         ]);
     }
 
     public function receiveMessageList($receiver){
         return DB::table('Message')
-            ->join('User','Message.u_idx_caller','=','User.u_idx')
+            ->select('Message.m_contents','Message.m_sendTime')
+            ->join('User','Message.u_idx_sender','=','User.u_idx')
             ->where('Message.u_idx_receiver', '=', $receiver)
             ->get();
     }
 
     public function sendMessageList($sender){
         return DB::table('Message')
+            ->select('User.u_name','Message.m_contents','Message.m_sendTime')
             ->join('User','Message.u_idx_receiver','=','User.u_idx')
-            ->where('Message.u_idx_caller', '=', $sender)
+            ->where('Message.u_idx_sender', '=', $sender)
             ->get();
     }
 }
