@@ -40,7 +40,13 @@ class Auth
         $this->email = $email;
     }
 
-    public function login(){
+    public function setIdCheck($id)
+    {
+        $this->id = $id;
+    }
+
+    public function login()
+    {
         $existsId = DB::table('User')->where([
             'u_id' => $this->id
         ])->pluck('u_idx');
@@ -59,7 +65,8 @@ class Auth
         }
     }
 
-    public function register(){
+    public function register()
+    {
         return DB::table('User')->insert([
             'u_id' => $this->id,
             'u_password' => $this->password,
@@ -67,5 +74,14 @@ class Auth
             'u_phoneNum' => $this->phoneNum,
             'u_email' => $this->email
         ]);
+    }
+
+    public function idCheck()
+    {
+        $result = DB::table('User')->where('u_id','=', $this->id)->pluck('u_idx');
+        if(count($result) == 0)
+            return 0;
+        else
+            return -1;
     }
 }

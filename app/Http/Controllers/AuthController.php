@@ -42,4 +42,12 @@ class AuthController
         $auth->setRegister($id, $password, $name, $phoneNum, $email);
         return response()->json(['Status' => $auth->register()], Response::HTTP_OK);
     }
+
+    public function idCheck(){
+        $id = $this->request->input('id');
+
+        $auth = new Auth();
+        $auth->setIdCheck($id);
+        return response()->json(['Status' => $auth->idCheck()], Response::HTTP_OK);
+    }
 }
