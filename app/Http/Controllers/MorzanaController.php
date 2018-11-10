@@ -29,12 +29,26 @@ class MorzanaController
 
     public function sendMessage()
     {
-        $caller = $this->request->input('caller');
+        $sender = $this->request->input('sender');
         $contents = $this->request->input('contents');
         $receiver = $this->request->input('receiver');
 
         $morzana = new Morzana();
-        $morzana->setMessage($caller,$contents,$receiver);
+        $morzana->setMessage($sender,$contents,$receiver);
         return response()->json(['Status' => $morzana->sendMessage()], Response::HTTP_OK);
+    }
+
+    public function receiveMessageList(){
+        $receiver = $this->request->get('receiver');
+
+        $morzana = new Morzana();
+        return response()->json($morzana->receiveMessageList($receiver), Response::HTTP_OK);
+    }
+
+    public function sendMessageList(){
+        $sender = $this->request->get('sender');
+
+        $morzana = new Morzana();
+        return response()->json($morzana->sendMessageList($sender), Response::HTTP_OK);
     }
 }

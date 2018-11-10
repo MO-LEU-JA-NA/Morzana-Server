@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class Morzana
 {
-    private $caller;
+    private $sender;
 
     private $contents;
 
@@ -22,9 +22,9 @@ class Morzana
     {
     }
 
-    public function setMessage($caller, $contents, $receiver)
+    public function setMessage($sender, $contents, $receiver)
     {
-        $this->caller = $caller;
+        $this->sender = $sender;
         $this->contents = $contents;
         $this->receiver = $receiver;
     }
@@ -37,9 +37,23 @@ class Morzana
     public function sendMessage()
     {
         return DB::table('Message')->insert([
-            'caller' => $this->caller,
-            'contents' => $this->contents,
-            'receiver' => $this->receiver
+            'u_idx_sender' => $this->sender,
+            'm_contents' => $this->contents,
+            'u_idx_receiver' => $this->receiver
         ]);
+    }
+
+    public function receiveMessageList($receiver){
+        return DB::table('Message')
+            ->join('User','Message.u_idx_caller','=','User.u_idx')
+            ->where('Message.u_idx_receiver', '=', $receiver)
+            ->get();
+    }
+
+    public function sendMessageList($sender){
+        return DB::table('Message')
+            ->join('User','Message.u_idx_receiver','=','User.u_idx')
+            ->where('Message.u_idx_caller', '=', $sender)
+            ->get();
     }
 }
