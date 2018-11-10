@@ -21,10 +21,23 @@ class Auth
 
     private $email;
 
-    public function __construct($id, $password)
+    public function __construct()
+    {
+
+    }
+
+    public function setLogin($id, $password){
+        $this->id = $id;
+        $this->password = $password;
+    }
+
+    public function setRegister($id, $password, $name, $phoneNum, $email)
     {
         $this->id = $id;
         $this->password = $password;
+        $this->name = $name;
+        $this->phoneNum = $phoneNum;
+        $this->email = $email;
     }
 
     public function login(){
@@ -44,5 +57,15 @@ class Auth
         } else {
             return 0;
         }
+    }
+
+    public function register(){
+        return DB::table('User')->insert([
+            'u_id' => $this->id,
+            'u_password' => $this->password,
+            'u_name' => $this->name,
+            'u_phoneNum' => $this->phoneNum,
+            'u_email' => $this->email
+        ]);
     }
 }
