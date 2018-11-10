@@ -32,7 +32,7 @@ class Morzana
     public function joinedUser()
     {
         return DB::table('User')
-            ->select('u_name','u_phoneNum')
+            ->select('u_name','u_phoneNum','u_idx')
             ->get();
     }
 
