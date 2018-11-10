@@ -31,7 +31,9 @@ class Morzana
 
     public function joinedUser()
     {
-        return DB::table('User')->get();
+        return DB::table('User')
+            ->select('u_name','u_phoneNum')
+            ->get();
     }
 
     public function sendMessage()
