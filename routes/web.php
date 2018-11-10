@@ -26,5 +26,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->group(['prefix' => 'morzana'], function () use ($router) {
         $router->get('joinedUser', 'MorzanaController@joinedUser');
+
+        $router->post('sendMessage', 'MorzanaController@sendMessage');
     });
 });

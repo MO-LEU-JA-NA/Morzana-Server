@@ -26,4 +26,15 @@ class MorzanaController
         $morzana = new Morzana();
         return response()->json($morzana->joinedUser(), Response::HTTP_OK);
     }
+
+    public function sendMessage()
+    {
+        $caller = $this->request->input('caller');
+        $contents = $this->request->input('contents');
+        $receiver = $this->request->input('receiver');
+
+        $morzana = new Morzana();
+        $morzana->setMessage($caller,$contents,$receiver);
+        return response()->json(['Status' => $morzana->sendMessage()], Response::HTTP_OK);
+    }
 }
