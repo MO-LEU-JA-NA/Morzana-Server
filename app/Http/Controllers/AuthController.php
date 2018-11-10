@@ -27,7 +27,7 @@ class AuthController
 
         $auth = new Auth();
         $auth->setLogin($id, $password);
-        return response()->json(['Status' => $auth->login()], Response::HTTP_OK);
+        return response()->json(['Status' => $auth->login(), $auth->myInfo()], Response::HTTP_OK);
     }
 
     public function register()

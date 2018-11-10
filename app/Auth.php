@@ -84,4 +84,12 @@ class Auth
         else
             return -1;
     }
+
+    public function myInfo()
+    {
+        return DB::table('User')
+            ->select('u_name','u_idx')
+            ->where('u_id','=',$this->id)
+            ->get();
+    }
 }
