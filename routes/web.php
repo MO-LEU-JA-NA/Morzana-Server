@@ -12,7 +12,7 @@
 */
 /** @var \Laravel\Lumen\Routing\Router $router */
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return response()->make(include 'socket.html', 200);
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
